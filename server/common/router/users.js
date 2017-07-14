@@ -17,16 +17,7 @@ router.get('/', function(req, res) {
 });
 
 router.post('/', function(req, res) {
-    console.log();
-    var name = req.param('name');
-    var email = req.param('email');
-    var username = req.param('username');
-
-    var newUser = new User({
-        name: name,
-        email: email,
-        username: username,
-    });
+    var newUser = new User(req.body);
     return newUser.save(function(err, user) {
         if (err) {
             console.log(err)
@@ -41,11 +32,7 @@ router.post('/', function(req, res) {
 
 router.put('/', function(req, res) {
     console.log('EDIT', req.param('name'), req.param('username'), req.param('email'), req.param('id'));
-    var body = {
-        name: req.param('name'),
-        username: req.param('username'),
-        email: req.param('email')
-    };
+    var newUser = new User(req.body);
     if (!req.param('id')) {
         res.statusCode = 404;
         return res.send({ error: 'not found' });
@@ -60,7 +47,6 @@ router.put('/', function(req, res) {
                 res.end('done');
             }
         });
-    res.end('done');
     res.json({
         message: 'User info updated..!',
         updated: req.body
