@@ -18,7 +18,6 @@ var UserSchema = mongoose.Schema({
         require: true
     }
 });
-
 UserSchema.path('username').required(true, 'username error');
 UserSchema.path('name').required(true, 'name error');
 UserSchema.path('email').required(true, 'email error');
