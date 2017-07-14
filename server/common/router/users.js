@@ -31,14 +31,13 @@ router.post('/', function(req, res) {
 });
 
 router.put('/', function(req, res) {
-    console.log('EDIT', req.param('name'), req.param('username'), req.param('email'), req.param('id'));
     var newUser = new User(req.body);
-    if (!req.param('id')) {
+    if (!req.body.id) {
         res.statusCode = 404;
         return res.send({ error: 'not found' });
     }
     User.updateOne({
-            _id: ObjectID(req.param('id'))
+            _id: ObjectID(req.body.id)
         }, { $set: body },
         function(err, user) {
             if (err) {
@@ -55,8 +54,7 @@ router.put('/', function(req, res) {
 });
 
 router.delete('/', function(req, res) {
-    console.log('DELETE', req.param('id'));
-    var userId = req.param('id');
+    var userId = req.body.id;
     if (!userId) {
         res.statusCode = 404;
         return res.send({ error: 'Not found' });
